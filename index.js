@@ -7,7 +7,7 @@ const app = express();
 
 app.use('/api/stripe/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: '*', credentials: false }));
 
 const screenLimit = rateLimit({
   windowMs: 60 * 1000,
