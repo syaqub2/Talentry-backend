@@ -4,13 +4,7 @@ const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  }
+  process.env.SUPABASE_SERVICE_KEY
 );
 
 router.post('/signup', async (req, res) => {
@@ -44,8 +38,8 @@ router.post('/signup', async (req, res) => {
           quantity: 1
         }],
         metadata: { userId: authData.user.id, plan },
-        success_url: `${process.env.FRONTEND_URL}/app?plan=activated`,
-        cancel_url: `${process.env.FRONTEND_URL}?checkout=cancelled`
+        success_url: process.env.FRONTEND_URL + '/app?plan=activated',
+        cancel_url: process.env.FRONTEND_URL + '?checkout=cancelled'
       });
       return res.json({ success: true, userId: authData.user.id, checkoutUrl: session.url });
     }
