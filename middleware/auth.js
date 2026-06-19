@@ -3,17 +3,11 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
- {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  }
 );
 
 module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith('Bearer ')) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'No token provided' });
   }
   const token = authHeader.split(' ')[1];
