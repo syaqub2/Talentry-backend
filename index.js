@@ -5,7 +5,6 @@ const rateLimit = require('express-rate-limit');
 
 const app = express();
 
-// Allow all origins
 app.use(cors());
 app.options('*', cors());
 
@@ -18,12 +17,12 @@ const screenLimit = rateLimit({
   message: { error: 'Too many requests. Please wait.' }
 });
 
-app.get('/', (req, res) => res.json({ status: 'Talentry backend running' }));
+app.get('/', (req, res) => res.json({ status: 'ok' }));
 
-app.use('/api/auth',   require('./routes/auth'));
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api/stripe', require('./routes/stripe'));
 app.use('/api/screen', screenLimit, require('./routes/screen'));
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log(`Talentry backend running on port ${process.env.PORT || 3000}`);
+  console.log('Talentry backend running');
 });
